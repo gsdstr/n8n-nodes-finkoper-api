@@ -14,14 +14,13 @@ export const mailFields: INodeProperties[] = [
 			},
 		},
 	},
-
+	//posts
 	{
 		displayName: 'Mail mailboxId',
 		name: 'mailboxId',
 		type: 'string' as NodePropertyTypes,
 		default: '',
 		required: true,
-		description: 'List all mail from box',
 		displayOptions: {
 			show: {
 				resource: ['mail'],
@@ -29,5 +28,110 @@ export const mailFields: INodeProperties[] = [
 			},
 		},
 	},
+	{
+		displayName: 'Start Mail ID',
+		name: 'afterId',
+		type: 'string' as NodePropertyTypes,
+		default: '',
+		displayOptions: {
+			show: {
+				resource: ['mail'],
+				operation: ['posts'],
+			},
+		},
+	},
+	{
+		displayName: 'Only Unread',
+		name: 'unread',
+		type: 'boolean' as NodePropertyTypes,
+		default: false,
+		displayOptions: {
+			show: {
+				resource: ['mail'],
+				operation: ['posts'],
+			},
+		},
+	},
+	//seen
+	{
+		displayName: 'BookkeeperTeamID',
+		name: 'bookkeeperTeamID',
+		type: 'string' as NodePropertyTypes,
+		default: '',
+		required: true,
+		displayOptions: {
+			show: {
+				resource: ['mail'],
+				operation: ['seen'],
+			},
+		},
+	},
+	{
+		displayName: 'Seen',
+		name: 'seen',
+		type: 'boolean' as NodePropertyTypes,
+		default: true,
+		displayOptions: {
+			show: {
+				resource: ['mail'],
+				operation: ['seen'],
+			},
+		},
+	},
+	// {
+	// 	displayName: 'Items',
+	// 	name: 'items',
+	// 	type: 'fixedCollection',
+	// 	default: {},
+	// 	required: true,
+	// 	typeOptions: {
+	// 		multipleValues: true,
+	// 	},
+	// 	displayOptions: {
+	// 		show: {
+	// 			resource: ['mail'],
+	// 			operation: ['seen'],
+	// 		},
+	// 	},
+	// 	options: [
+	// 		{
+	// 			name: 'metadataValues',
+	// 			displayName: 'Metadata',
+	// 			values: [
+	// 				{
+	// 					displayName: 'From',
+	// 					name: 'from',
+	// 					type: 'string',
+	// 					default: '',
+	// 					required: true,
+	// 				},
+	// 				{
+	// 					displayName: 'Posts',
+	// 					name: 'posts',
+	// 					type: 'string',
+	// 					default: '',
+	// 					required: true,
+	// 					typeOptions: {
+	// 						multipleValues: true,
+	// 					},
+	// 					description: 'Posts IDs',
+	// 				},
+	// 			],
+	// 		},
+	// 	],
+	// },
+	{
+		displayName: 'Items',
+		name: 'items',
+		type: 'json',
+		default: {},
+		required: true,
+		displayOptions: {
+			show: {
+				resource: ['mail'],
+				operation: ['seen'],
+			},
+		},
+	}
 
 ];
