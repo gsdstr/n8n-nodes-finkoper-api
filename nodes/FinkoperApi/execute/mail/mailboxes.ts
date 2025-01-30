@@ -13,7 +13,7 @@ export async function mailboxes(
 	const accountId = ef.getNodeParameter('accountId', itemIndex);
 	const options: IHttpRequestOptions = {
 		method: 'GET' as IHttpRequestMethods,
-		url: `/mail/account/${accountId}/mailboxes`
+		url: `/api/v1/mail/account/${accountId}/mailboxes`
 	};
 
 	return await finkoperApiRequest<IDataObject>(ef, options);

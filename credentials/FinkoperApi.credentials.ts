@@ -32,7 +32,7 @@ export class FinkoperApi implements ICredentialType {
 			displayName: 'URL',
 			name: 'url',
 			type: 'string',
-			default: 'https://api.finkoper.com/api/v1',
+			default: 'https://api.finkoper.com',
 		},
 		{
 			displayName: 'Session Token',
@@ -91,7 +91,7 @@ export class FinkoperApi implements ICredentialType {
 	test: ICredentialTestRequest = {
 		request: {
 			baseURL: '={{$credentials.url}}',
-			url: '/users/info',
+			url: '/api/v1/users/info',
 		},
 	};
 }

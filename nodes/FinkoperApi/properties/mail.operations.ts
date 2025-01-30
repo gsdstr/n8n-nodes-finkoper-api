@@ -23,6 +23,12 @@ export const mailOperations: INodeProperties = {
 			description: 'List all mailboxes',
 			value: 'posts',
 		},
+		{
+			name: 'Seen',
+			action: 'Mark read or unread',
+			description: 'Mark read or unread',
+			value: 'seen',
+		},
 	],
 	default: 'mailboxes',
 };
