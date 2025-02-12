@@ -3,10 +3,11 @@ import {
 	type INodeExecutionData,
 	INodeType,
 	INodeTypeDescription,
-	NodeApiError, NodeOperationError,
+	NodeApiError,
+	NodeOperationError,
 } from 'n8n-workflow';
-import {finkoperApiNodeProperties} from './properties';
-import {resourceOperationsFunctions} from './execute';
+import { finkoperApiNodeProperties } from './properties';
+import { resourceOperationsFunctions } from './execute';
 
 export class FinkoperApi implements INodeType {
 	description: INodeTypeDescription = {
@@ -41,8 +42,9 @@ export class FinkoperApi implements INodeType {
 	};
 
 	async execute(this: IExecuteFunctions): Promise<INodeExecutionData[][]> {
-		const returnData = [];
 		const items = this.getInputData();
+		const returnData: INodeExecutionData[] = [];
+		// const returnData = await Promise.all(items.map(async (_, itemIndex): Promise<INodeExecutionData[]> => {
 		for (let itemIndex = 0; itemIndex < items.length; itemIndex++) {
 			try {
 				const resource = this.getNodeParameter('resource', itemIndex) as string;
@@ -56,18 +58,36 @@ export class FinkoperApi implements INodeType {
 					});
 				}
 
-				const responseData = await fn(this, itemIndex);
+				const res = await fn(this, itemIndex);
+				// this.logger.info('execute res ' + JSON.stringify(res));
+				const responseData = this.helpers.returnJsonArray(res);
+				// this.logger.info('execute responseData ' + JSON.stringify(responseData));
 				//returnData.push(responseData);
-				returnData.push(this.helpers.returnJsonArray(responseData));
+				//returnData.push(this.helpers.returnJsonArray(responseData));
+				// return [{
+				// 	json: res,
+				// 	pairedItem: itemIndex
+				// }] as INodeExecutionData[];
+				const executionData = this.helpers.constructExecutionMetaData(
+					this.helpers.returnJsonArray(responseData),
+					{ itemData: { item: itemIndex } },
+				);
+				returnData.push(...executionData);
 			} catch (error) {
 				if (this.continueOnFail()) {
-					returnData.push([{ json: this.getInputData(itemIndex)[0].json, error, pairedItem: itemIndex }]);
+					returnData.push({
+						json: this.getInputData(itemIndex)[itemIndex].json,
+						error,
+						pairedItem: itemIndex
+					});
 				} else {
-					throw new NodeOperationError(this.getNode(), error, {});
+					throw new NodeOperationError(this.getNode(), error, { itemIndex: itemIndex });
 				}
 			}
 		}
-		return returnData;
+		// this.logger.info('execute returnData ' + JSON.stringify(returnData));
+		return [returnData];
+		//return returnData;
 	}
 
 	//

@@ -12,22 +12,39 @@ export const mailOperations: INodeProperties = {
 	},
 	options: [
 		{
-			name: 'Mailboxes',
+			name: 'Mail Boxes',
 			action: 'List all mailboxes',
 			description: 'List all mailboxes',
 			value: 'mailboxes',
 		},
 		{
-			name: 'Posts',
+			name: 'Mail Credentials',
+			action: 'Get credentials',
+			description: 'Mark read or unread',
+			value: 'credentials',
+		},
+		{
+			name: 'Mail Posts',
 			action: 'List all mail',
 			description: 'List all mailboxes',
 			value: 'posts',
 		},
 		{
-			name: 'Seen',
+			name: 'Mail Posts Update',
+			action: 'Posts update',
+			description: 'Posts Update',
+			value: 'postsUpdate',
+		},
+		{
+			name: 'Mail Seen',
 			action: 'Mark read or unread',
 			description: 'Mark read or unread',
 			value: 'seen',
+		},
+		{
+			name: 'Get Full Post',
+			action: 'Get one full post',
+			value: 'get',
 		},
 	],
 	default: 'mailboxes',

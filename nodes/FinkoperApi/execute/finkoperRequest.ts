@@ -31,8 +31,12 @@ export async function finkoperApiRequest<T>(ef: IExecuteFunctions, options: IHtt
 
 	// @ts-ignore
 	const res = await ef.helpers.httpRequestWithAuthentication.call(ef, 'finkoperApi', requestOptions);
+	// ef.logger.info('finkoperApiRequest res' + JSON.stringify(res));
 	if (res.data) {
 		return res.data;
+	}
+	if (res.hasOwnProperty('data') && (res.hasOwnProperty('errors') && res.errors.length < 1)) {
+		return {} as T;
 	}
 	if (res.success) { // if url start from /api-email
 		return {} as T;
@@ -41,5 +45,6 @@ export async function finkoperApiRequest<T>(ef: IExecuteFunctions, options: IHtt
 	// if (res.errormessage) {
 	// 	errors.push(res.errors);
 	// }
+	ef.logger.info('finkoperApiRequest return error' + JSON.stringify(res));
 	throw new NodeApiError(ef.getNode(), res);
 }

@@ -1,6 +1,14 @@
 import { INodeProperties } from 'n8n-workflow';
 import {mailOperations} from "./mail.operations";
 import {mailFields} from "./mail.fields";
+import { customerOperations } from './customer.operations';
+import { customerFields } from './customer.fields';
+import {taskOperations} from "./task.operations";
+import {taskFields} from "./task.fields";
+import {roleOperations} from "./role.operations";
+import {roleFields} from "./role.fields";
+import {userFields} from "./user.fields";
+import {userOperations} from "./user.operations";
 
 /**
  * In the properties array we have two mandatory options objects required
@@ -24,11 +32,35 @@ export const finkoperApiNodeProperties: INodeProperties[] = [
 				name: 'Mail',
 				value: 'mail',
 			},
+			{
+				name: 'Customer',
+				value: 'customer',
+			},
+			{
+				name: 'Task',
+				value: 'task',
+			},
+			{
+				name: 'Role',
+				value: 'role',
+			},
+			{
+				name: 'User',
+				value: 'user',
+			},
 		],
 		default: 'mail',
 	},
 
 	mailOperations,
+  customerOperations,
+	taskOperations,
+	roleOperations,
+	userOperations,
 
 	...mailFields,
+	...customerFields,
+	...taskFields,
+	...roleFields,
+	...userFields,
 ];

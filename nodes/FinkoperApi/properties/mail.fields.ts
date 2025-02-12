@@ -62,7 +62,7 @@ export const mailFields: INodeProperties[] = [
 		displayOptions: {
 			show: {
 				resource: ['mail'],
-				operation: ['seen'],
+				operation: ['seen', 'credentials','postsUpdate'],
 			},
 		},
 	},
@@ -132,6 +132,46 @@ export const mailFields: INodeProperties[] = [
 				operation: ['seen'],
 			},
 		},
-	}
-
+	},
+	{
+		displayName: 'Posts',
+		name: 'posts',
+		type: 'string',
+		default: [],
+		typeOptions: {
+			multipleValues: true,
+		},
+		required: true,
+		displayOptions: {
+			show: {
+				resource: ['mail'],
+				operation: ['postsUpdate'],
+			},
+		},
+	},
+	{
+		displayName: 'Customers',
+		name: 'customers',
+		type: 'json',
+		default: [],
+		required: true,
+		displayOptions: {
+			show: {
+				resource: ['mail'],
+				operation: ['postsUpdate'],
+			},
+		},
+	},
+	{
+		displayName: 'Mail Post ID',
+		name: 'mailPostID',
+		type: 'string' as NodePropertyTypes,
+		default: '',
+		displayOptions: {
+			show: {
+				resource: ['mail'],
+				operation: ['get'],
+			},
+		},
+	},
 ];
