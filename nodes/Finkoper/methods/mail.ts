@@ -21,6 +21,16 @@ export async function getMailboxCounters(
 	return (await client.mail.getMailboxCounters({ accountId, bookkeeperTeamId })) as unknown as IDataObject[];
 }
 
+export async function getMail(
+	ef: IExecuteFunctions,
+	itemIndex: number,
+	client: FinkoperClient,
+	bookkeeperTeamId: string,
+): Promise<IDataObject> {
+	const postId = ef.getNodeParameter('postId', itemIndex) as string;
+	return (await client.mail.getMail(postId)) as unknown as IDataObject;
+}
+
 export async function getPosts(
 	ef: IExecuteFunctions,
 	itemIndex: number,

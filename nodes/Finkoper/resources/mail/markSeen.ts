@@ -1,5 +1,5 @@
 import type { INodeProperties } from 'n8n-workflow';
-import { accountIdProperty, mailboxIdProperty, bookkeeperTeamIdProperty } from '../../shared';
+import { accountIdProperty, mailboxIdProperty, bookkeeperTeamIdProperty, postIdProperty } from '../../shared';
 
 const showOnlyForMarkSeen = {
 	operation: ['markSeen'],
@@ -21,14 +21,10 @@ export const mailMarkSeenDescription: INodeProperties[] = [
 		displayOptions: { show: showOnlyForMarkSeen },
 	},
 	{
-		displayName: 'Post ID',
-		name: 'postId',
-		type: 'string',
-		required: true,
+		...postIdProperty,
 		displayOptions: {
 			show: showOnlyForMarkSeen,
 		},
-		default: '',
 		description: 'The ID of the email post to mark as seen',
 	},
 ];

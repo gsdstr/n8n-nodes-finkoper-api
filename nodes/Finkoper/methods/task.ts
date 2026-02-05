@@ -6,7 +6,7 @@ export async function list(
 	itemIndex: number,
 	client: FinkoperClient,
 	bookkeeperTeamId: string,
-): Promise<IDataObject[]> {
+): Promise<IDataObject> { //TODO: change to INodeListSearchResult
 	const filters = ef.getNodeParameter('filters', itemIndex, {}) as IDataObject;
 	return (await client.task.list({
 		bookkeeperTeamId,
@@ -17,7 +17,7 @@ export async function list(
 		dateTo: filters.dateTo as string | undefined,
 		page: filters.page as number | undefined,
 		perPage: filters.perPage as number | undefined,
-	})) as unknown as IDataObject[];
+	})) as unknown as IDataObject;
 }
 
 export async function create(

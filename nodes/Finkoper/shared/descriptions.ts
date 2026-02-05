@@ -47,3 +47,14 @@ export const bookkeeperTeamIdProperty: INodeProperties = {
 	description: 'The ID of the bookkeeper team. If not provided, it will be automatically fetched.',
 };
 
+/**
+ * Common property for Mail Post ID
+ */
+export const postIdProperty: INodeProperties = {
+	displayName: 'Post ID',
+	name: 'postId',
+	type: 'string',
+	required: true,
+	default: '',
+	description: 'The ID of the email post',
+};
