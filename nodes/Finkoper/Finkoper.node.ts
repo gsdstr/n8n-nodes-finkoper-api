@@ -1,11 +1,10 @@
 import type {
-	IDataObject,
 	IExecuteFunctions,
 	INodeExecutionData,
 	INodeType,
 	INodeTypeDescription,
 } from 'n8n-workflow';
-import { NodeConnectionTypes, NodeOperationError } from 'n8n-workflow';
+import { NodeApiError, NodeConnectionTypes, NodeOperationError } from 'n8n-workflow';
 import { FinkoperClient } from 'finkoper-api';
 
 // Descriptions (UI definitions)
@@ -18,12 +17,7 @@ import { companyDescription } from './resources/company';
 
 // Methods (execution logic)
 import {
-	executeMailOperation,
-	executeTaskOperation,
-	executeCustomerOperation,
-	executeRoleOperation,
-	executeUserOperation,
-	executeCompanyOperation,
+	resourceOperationsFunctions,
 } from './methods';
 
 export class Finkoper implements INodeType {
@@ -92,37 +86,26 @@ export class Finkoper implements INodeType {
 				const bookkeeperTeamId =
 					(this.getNodeParameter('bookkeeperTeamId', i, '') as string) || (await client.getTeamId());
 
-				let result: unknown;
-
-				switch (resource) {
-					case 'mail':
-						result = await executeMailOperation.call(this, client, operation, i, bookkeeperTeamId);
-						break;
-					case 'task':
-						result = await executeTaskOperation.call(this, client, operation, i, bookkeeperTeamId);
-						break;
-					case 'customer':
-						result = await executeCustomerOperation.call(this, client, operation, i, bookkeeperTeamId);
-						break;
-					case 'role':
-						result = await executeRoleOperation.call(this, client, operation, i, bookkeeperTeamId);
-						break;
-					case 'user':
-						result = await executeUserOperation.call(this, client, operation, i, bookkeeperTeamId);
-						break;
-					case 'company':
-						result = await executeCompanyOperation.call(this, client, operation, i, bookkeeperTeamId);
-						break;
-					default:
-						throw new NodeOperationError(
-							this.getNode(),
-							`Resource "${resource}" is not supported`,
-							{ itemIndex: i },
-						);
+				const fn = resourceOperationsFunctions[resource][operation];
+				if (!fn) {
+					throw new NodeApiError(this.getNode(), {
+						message: 'Operation not supported.',
+						description: `The “${operation}” function for the “${resource}” resource is not supported!`,
+					});
 				}
 
+				const res = await fn(this, i, client, bookkeeperTeamId);
+				// this.logger.info('execute res ' + JSON.stringify(res));
+				const responseData = this.helpers.returnJsonArray(res);
+				// this.logger.info('execute responseData ' + JSON.stringify(responseData));
+				//returnData.push(responseData);
+				//returnData.push(this.helpers.returnJsonArray(responseData));
+				// return [{
+				// 	json: res,
+				// 	pairedItem: itemIndex
+				// }] as INodeExecutionData[];
 				const executionData = this.helpers.constructExecutionMetaData(
-					this.helpers.returnJsonArray(result as IDataObject[]),
+					this.helpers.returnJsonArray(responseData),
 					{ itemData: { item: i } },
 				);
 				returnData.push(...executionData);

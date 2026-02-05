@@ -1,23 +1,12 @@
-import type { IExecuteFunctions } from 'n8n-workflow';
-import { NodeOperationError } from 'n8n-workflow';
+import type { IDataObject, IExecuteFunctions } from 'n8n-workflow';
 import { FinkoperClient } from 'finkoper-api';
 
-export async function executeCompanyOperation(
-	this: IExecuteFunctions,
-	client: FinkoperClient,
-	operation: string,
+
+export async function list(
+	ef: IExecuteFunctions,
 	itemIndex: number,
-	_bookkeeperTeamId: string,
-): Promise<unknown> {
-	switch (operation) {
-		case 'list': {
-			return client.company.list();
-		}
-		default:
-			throw new NodeOperationError(
-				this.getNode(),
-				`Operation "${operation}" for company is not supported`,
-				{ itemIndex },
-			);
-	}
+	client: FinkoperClient,
+	bookkeeperTeamId: string,
+): Promise<IDataObject[]> {
+	return (await client.company.list()) as unknown as IDataObject[];
 }

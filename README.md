@@ -66,6 +66,10 @@ pnpm run dev
 | `pnpm run lint` | Check for linting errors |
 | `pnpm run lint:fix` | Auto-fix linting issues |
 
+### Debugging
+
+For detailed instructions on how to debug your nodes using VS Code, see [DEBUG.md](./DEBUG.md).
+
 ### Architecture
 
 This node uses the `finkoper-api` library for all API interactions:

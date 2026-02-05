@@ -1,26 +1,20 @@
-import type { IExecuteFunctions } from 'n8n-workflow';
-import { NodeOperationError } from 'n8n-workflow';
+import type { IExecuteFunctions, IDataObject } from 'n8n-workflow';
 import { FinkoperClient } from 'finkoper-api';
 
-export async function executeRoleOperation(
-	this: IExecuteFunctions,
-	client: FinkoperClient,
-	operation: string,
+export async function list(
+	ef: IExecuteFunctions,
 	itemIndex: number,
+	client: FinkoperClient,
 	bookkeeperTeamId: string,
-): Promise<unknown> {
-	switch (operation) {
-		case 'list': {
-			return client.role.list(bookkeeperTeamId);
-		}
-		case 'getUsers': {
-			return client.role.getUsers(bookkeeperTeamId);
-		}
-		default:
-			throw new NodeOperationError(
-				this.getNode(),
-				`Operation "${operation}" for role is not supported`,
-				{ itemIndex },
-			);
-	}
+): Promise<IDataObject[]> {
+	return (await client.role.list(bookkeeperTeamId)) as unknown as IDataObject[];
+}
+
+export async function getUsers(
+	ef: IExecuteFunctions,
+	itemIndex: number,
+	client: FinkoperClient,
+	bookkeeperTeamId: string,
+): Promise<IDataObject[]> {
+	return (await client.role.getUsers(bookkeeperTeamId)) as unknown as IDataObject[];
 }

@@ -3,6 +3,8 @@ import { mailGetMailboxesDescription } from './getMailboxes';
 import { mailGetPostsDescription } from './getPosts';
 import { mailGetCredentialsDescription } from './getCredentials';
 import { mailMarkSeenDescription } from './markSeen';
+import { mailGetMailboxCountersDescription } from './getMailboxCounters';
+import { mailGetMailSeenByDescription } from './getMailSeenBy';
 
 const showOnlyForMail = {
 	resource: ['mail'],
@@ -19,10 +21,16 @@ export const mailDescription: INodeProperties[] = [
 		},
 		options: [
 			{
+				name: 'Get Mailbox Counters',
+				value: 'getMailboxCounters',
+				action: 'Get counters for mailboxes',
+				description: 'Get new and total message counters for mailboxes',
+			},
+			{
 				name: 'Get Mailboxes',
 				value: 'getMailboxes',
 				action: 'Get mailboxes for an account',
-				description: 'Get all mailboxes for a mail account',
+				description: 'Get all mailboxes (tree view) for a mail account',
 			},
 			{
 				name: 'Get Posts',
@@ -42,6 +50,12 @@ export const mailDescription: INodeProperties[] = [
 				action: 'Mark a post as seen',
 				description: 'Mark an email post as seen/read',
 			},
+			{
+				name: 'Get Mail Seen By',
+				value: 'getMailSeenBy',
+				action: 'Get users who saw a post',
+				description: 'Get a list of users who have viewed a specific email post',
+			},
 		],
 		default: 'getMailboxes',
 	},
@@ -49,4 +63,6 @@ export const mailDescription: INodeProperties[] = [
 	...mailGetPostsDescription,
 	...mailGetCredentialsDescription,
 	...mailMarkSeenDescription,
+	...mailGetMailboxCountersDescription,
+	...mailGetMailSeenByDescription,
 ];

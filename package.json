@@ -21,7 +21,10 @@
   },
   "packageManager": "pnpm@9.1.4",
   "scripts": {
-    "build": "n8n-node build",
+    "build": "n8n-node build && npm run bundle && npm run postbuild",
+    "bundle_prod": "esbuild dist/nodes/Finkoper/Finkoper.node.js --bundle --platform=node --external:n8n-workflow --outfile=dist/nodes/Finkoper/Finkoper.node.js --allow-overwrite --format=cjs && esbuild dist/credentials/FinkoperApi.credentials.js --bundle --platform=node --external:n8n-workflow --outfile=dist/credentials/FinkoperApi.credentials.js --allow-overwrite --format=cjs",
+    "bundle": "esbuild dist/nodes/Finkoper/Finkoper.node.js --bundle --platform=node --external:n8n-workflow --outfile=dist/nodes/Finkoper/Finkoper.node.js --allow-overwrite --format=cjs --sourcemap && esbuild dist/credentials/FinkoperApi.credentials.js --bundle --platform=node --external:n8n-workflow --outfile=dist/credentials/FinkoperApi.credentials.js --allow-overwrite --format=cjs --sourcemap",
+    "postbuild": "node scripts/postbuild.js",
     "build:watch": "tsc --watch",
     "dev": "n8n-node dev",
     "lint": "n8n-node lint",
@@ -44,6 +47,7 @@
   },
   "devDependencies": {
     "@n8n/node-cli": "^0.19.0",
+    "esbuild": "^0.24.2",
     "eslint": "9.32.0",
     "prettier": "3.6.2",
     "release-it": "^19.2.4",
