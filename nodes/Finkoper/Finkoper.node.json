@@ -1,0 +1,21 @@
+{
+	"node": "n8n-nodes-finkoper.finkoper",
+	"nodeVersion": "1.1",
+	"codexVersion": "1.1",
+	"categories": [
+		"Productivity",
+		"CRM"
+	],
+	"resources": {
+		"credentialDocumentation": [
+			{
+				"url": "https://docs.finkoper.com/api"
+			}
+		],
+		"primaryDocumentation": [
+			{
+				"url": "https://docs.finkoper.com"
+			}
+		]
+	}
+}

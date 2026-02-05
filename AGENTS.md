@@ -2,35 +2,57 @@
 
 ## Project Overview
 
-This project contains n8n nodes for Finkoper. It is currently undergoing a rewrite from "Legacy" (direct HTTP requests) to "V2" (using the `finkoper-api` library).
+This project provides n8n community nodes for the Finkoper CRM API. It uses the `finkoper-api` library for all API operations.
 
 ## Architecture
 
-- `nodes/FinkoperApi/`: Main node directory.
-  - `v2/`: **NEW** implementation using the base library.
-  - `execute/`: Legacy execution logic (being migrated).
-  - `properties/`: Node UI fields and operation definitions.
+```
+finkoper-n8n/
+├── credentials/
+│   └── FinkoperApi.credentials.ts   # Auth with token refresh
+├── nodes/Finkoper/
+│   ├── Finkoper.node.ts             # Main node implementation
+│   ├── Finkoper.node.json           # Codex metadata
+│   └── resources/                    # UI field definitions
+│       ├── mail/index.ts
+│       ├── task/index.ts
+│       ├── customer/index.ts
+│       ├── role/index.ts
+│       ├── user/index.ts
+│       └── company/index.ts
+└── icons/
+    ├── finkoper.svg
+    └── finkoper.dark.svg
+```
 
-## Rewrite Strategy (Migrating to V2)
+## Implementation Pattern
 
-1. **Use the Library**: All new operations MUST use `FinkoperClient` from `finkoper-api`.
-2. **V2 Node**: `nodes/FinkoperApi/v2/FinkoperApiV2.node.ts` is the entry point for version 2.
-3. **Compatibility**: We are maintaining the legacy structure within `v2/` for now but injecting the client into the execution functions.
+- **Hybrid approach**: Declarative UI definitions + programmatic execute using `FinkoperClient`
+- Uses `@n8n/node-cli` for build tools (not tsc+gulp)
+- Modern n8n patterns: `NodeConnectionTypes`, `usableAsTool: true`
 
-## Implementation Guide
+## Adding New Operations
 
-To migrate a new operation to V2:
-1. Copy the legacy file to `nodes/FinkoperApi/v2/execute/...`.
-2. Update the function signature to accept `client: FinkoperClient`.
-3. Replace the `finkoperApiRequest` call with a call to the appropriate client method (e.g., `client.task.list()`).
-4. Register the new function in `nodes/FinkoperApi/v2/execute/index.ts`.
+1. Add the operation to the resource's `index.ts` in `resources/`
+2. Implement the method call in the corresponding `execute*Operation` method in `Finkoper.node.ts`
+3. Ensure the corresponding method exists in `finkoper-api`
 
-## Build & Link
-
-This project links to `finkoper-api`. If you update the library, you must rebuild it there (`pnpm build`).
-Due to environment constraints, we use `npm install ../finkoper-api` for linking here.
+## Build & Test
 
 ```bash
-npm install
-npm run build
+# Rebuild finkoper-api first (if changed)
+cd ../finkoper-api && pnpm build && cd ../finkoper-n8n
+
+# Install and build
+pnpm install
+pnpm run build
+
+# Start dev server (runs n8n with node loaded)
+pnpm run dev
 ```
+
+## Related Projects
+
+- `../finkoper-api/` - Core client library (dependency)
+- `../finkoper-mcp/` - MCP server
+- `../finkoper-cli/` - CLI tool
