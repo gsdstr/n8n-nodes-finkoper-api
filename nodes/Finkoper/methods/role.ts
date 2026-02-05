@@ -6,7 +6,7 @@ export async function executeRoleOperation(
 	this: IExecuteFunctions,
 	client: FinkoperClient,
 	operation: string,
-	_itemIndex: number,
+	itemIndex: number,
 	bookkeeperTeamId: string,
 ): Promise<unknown> {
 	switch (operation) {
@@ -20,7 +20,7 @@ export async function executeRoleOperation(
 			throw new NodeOperationError(
 				this.getNode(),
 				`Operation "${operation}" for role is not supported`,
-				{ itemIndex: _itemIndex },
+				{ itemIndex },
 			);
 	}
 }

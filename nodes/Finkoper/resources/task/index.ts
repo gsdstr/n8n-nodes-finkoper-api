@@ -1,6 +1,6 @@
 import type { INodeProperties } from 'n8n-workflow';
-import { taskListDescription } from './list.description';
-import { taskCreateDescription } from './create.description';
+import { taskListDescription } from './list';
+import { taskCreateDescription } from './create';
 
 const showOnlyForTask = {
 	resource: ['task'],

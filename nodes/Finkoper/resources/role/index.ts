@@ -1,4 +1,6 @@
 import type { INodeProperties } from 'n8n-workflow';
+import { roleListDescription } from './list';
+import { roleGetUsersDescription } from './getUsers';
 
 const showOnlyForRole = {
 	resource: ['role'],
@@ -23,24 +25,12 @@ export const roleDescription: INodeProperties[] = [
 			{
 				name: 'Get Users',
 				value: 'getUsers',
-				action: 'Get users with role',
-				description: 'Get all users assigned to a specific role',
+				action: 'Get users by role',
+				description: 'Get all users grouped by role',
 			},
 		],
 		default: 'list',
 	},
-	{
-		displayName: 'Role ID',
-		name: 'roleId',
-		type: 'string',
-		required: true,
-		displayOptions: {
-			show: {
-				resource: ['role'],
-				operation: ['getUsers'],
-			},
-		},
-		default: '',
-		description: 'The ID of the role',
-	},
+	...roleListDescription,
+	...roleGetUsersDescription,
 ];

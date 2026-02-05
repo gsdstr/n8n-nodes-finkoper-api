@@ -1,10 +1,8 @@
 import type { INodeProperties } from 'n8n-workflow';
-import {
-	mailGetMailboxesDescription,
-	mailGetPostsDescription,
-	mailGetCredentialsDescription,
-	mailMarkSeenDescription,
-} from './mail.description';
+import { mailGetMailboxesDescription } from './getMailboxes';
+import { mailGetPostsDescription } from './getPosts';
+import { mailGetCredentialsDescription } from './getCredentials';
+import { mailMarkSeenDescription } from './markSeen';
 
 const showOnlyForMail = {
 	resource: ['mail'],
@@ -36,7 +34,7 @@ export const mailDescription: INodeProperties[] = [
 				name: 'Get Credentials',
 				value: 'getCredentials',
 				action: 'Get mail account credentials',
-				description: 'Get credentials for a mail account',
+				description: 'Get credentials for mail accounts',
 			},
 			{
 				name: 'Mark Seen',

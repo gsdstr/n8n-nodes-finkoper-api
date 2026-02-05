@@ -17,11 +17,12 @@ export async function executeMailOperation(
 		case 'getPosts': {
 			const accountId = this.getNodeParameter('accountId', itemIndex) as string;
 			const mailboxId = this.getNodeParameter('mailboxId', itemIndex) as string;
-			const additionalFields = this.getNodeParameter('additionalFields', itemIndex, {}) as IDataObject;
+			const filters = this.getNodeParameter('filters', itemIndex, {}) as IDataObject;
 			return client.mail.getPosts({
 				accountId,
 				mailboxId,
-				...additionalFields,
+				unread: filters.unread as boolean | undefined,
+				afterId: filters.afterId as string | undefined,
 			});
 		}
 		case 'getCredentials': {

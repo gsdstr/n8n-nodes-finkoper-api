@@ -8,6 +8,7 @@ import type {
 import { NodeConnectionTypes, NodeOperationError } from 'n8n-workflow';
 import { FinkoperClient } from 'finkoper-api';
 
+// Descriptions (UI definitions)
 import { mailDescription } from './resources/mail';
 import { taskDescription } from './resources/task';
 import { customerDescription } from './resources/customer';
@@ -15,12 +16,15 @@ import { roleDescription } from './resources/role';
 import { userDescription } from './resources/user';
 import { companyDescription } from './resources/company';
 
-import { executeMailOperation } from './resources/mail/Mail.methods';
-import { executeTaskOperation } from './resources/task/Task.methods';
-import { executeCustomerOperation } from './resources/customer/Customer.methods';
-import { executeRoleOperation } from './resources/role/Role.methods';
-import { executeUserOperation } from './resources/user/User.methods';
-import { executeCompanyOperation } from './resources/company/Company.methods';
+// Methods (execution logic)
+import {
+	executeMailOperation,
+	executeTaskOperation,
+	executeCustomerOperation,
+	executeRoleOperation,
+	executeUserOperation,
+	executeCompanyOperation,
+} from './methods';
 
 export class Finkoper implements INodeType {
 	description: INodeTypeDescription = {
@@ -50,21 +54,14 @@ export class Finkoper implements INodeType {
 				type: 'options',
 				noDataExpression: true,
 				options: [
-					{ name: 'Mail', value: 'mail' },
-					{ name: 'Task', value: 'task' },
-					{ name: 'Customer', value: 'customer' },
-					{ name: 'Role', value: 'role' },
-					{ name: 'User', value: 'user' },
 					{ name: 'Company', value: 'company' },
+					{ name: 'Customer', value: 'customer' },
+					{ name: 'Mail', value: 'mail' },
+					{ name: 'Role', value: 'role' },
+					{ name: 'Task', value: 'task' },
+					{ name: 'User', value: 'user' },
 				],
 				default: 'mail',
-			},
-			{
-				displayName: 'Bookkeeper Team ID',
-				name: 'bookkeeperTeamId',
-				type: 'string',
-				default: '',
-				description: 'The ID of the bookkeeper team. If not provided, it will be automatically fetched.',
 			},
 			...mailDescription,
 			...taskDescription,

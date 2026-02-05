@@ -2,25 +2,22 @@ import type { IExecuteFunctions } from 'n8n-workflow';
 import { NodeOperationError } from 'n8n-workflow';
 import { FinkoperClient } from 'finkoper-api';
 
-export async function executeUserOperation(
+export async function executeCompanyOperation(
 	this: IExecuteFunctions,
 	client: FinkoperClient,
 	operation: string,
-	_itemIndex: number,
-	bookkeeperTeamId: string,
+	itemIndex: number,
+	_bookkeeperTeamId: string,
 ): Promise<unknown> {
 	switch (operation) {
-		case 'getCompany': {
-			return client.user.getCompany(bookkeeperTeamId);
-		}
-		case 'getInfo': {
-			return client.user.info();
+		case 'list': {
+			return client.company.list();
 		}
 		default:
 			throw new NodeOperationError(
 				this.getNode(),
-				`Operation "${operation}" for user is not supported`,
-				{ itemIndex: _itemIndex },
+				`Operation "${operation}" for company is not supported`,
+				{ itemIndex },
 			);
 	}
 }

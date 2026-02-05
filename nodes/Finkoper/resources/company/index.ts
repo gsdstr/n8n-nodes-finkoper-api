@@ -1,4 +1,5 @@
 import type { INodeProperties } from 'n8n-workflow';
+import { companyListDescription } from './list';
 
 const showOnlyForCompany = {
 	resource: ['company'],
@@ -23,4 +24,5 @@ export const companyDescription: INodeProperties[] = [
 		],
 		default: 'list',
 	},
+	...companyListDescription,
 ];

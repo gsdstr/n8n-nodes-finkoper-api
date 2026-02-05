@@ -11,12 +11,16 @@ export async function executeTaskOperation(
 ): Promise<unknown> {
 	switch (operation) {
 		case 'list': {
-			const additionalFields = this.getNodeParameter('additionalFields', itemIndex, {}) as IDataObject;
+			const filters = this.getNodeParameter('filters', itemIndex, {}) as IDataObject;
 			return client.task.list({
 				bookkeeperTeamId,
-				listMode: (additionalFields.listMode as string) || 'all',
-				taskType: (additionalFields.taskType as string) || 'all',
-				...additionalFields,
+				listMode: (filters.listMode as string) || 'all',
+				taskType: (filters.taskType as string) || 'all',
+				status: filters.status as string | undefined,
+				dateFrom: filters.dateFrom as string | undefined,
+				dateTo: filters.dateTo as string | undefined,
+				page: filters.page as number | undefined,
+				perPage: filters.perPage as number | undefined,
 			});
 		}
 		case 'create': {
@@ -27,7 +31,10 @@ export async function executeTaskOperation(
 				bookkeeperTeamId,
 				text,
 				assignees,
-				...additionalFields,
+				priority: additionalFields.priority as 'low' | 'mid' | 'high' | undefined,
+				dateBegin: additionalFields.dateBegin as string | undefined,
+				dateEnd: additionalFields.dateEnd as string | undefined,
+				status: additionalFields.status as string | undefined,
 			});
 		}
 		default:
