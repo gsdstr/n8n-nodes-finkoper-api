@@ -89,3 +89,23 @@ export async function markSeen(
 		],
 	})) as unknown as IDataObject;
 }
+
+export async function updatePosts(
+	ef: IExecuteFunctions,
+	itemIndex: number,
+	client: FinkoperClient,
+	bookkeeperTeamId: string,
+): Promise<IDataObject> {
+	const accountId = ef.getNodeParameter('accountId', itemIndex) as string;
+	const posts = (ef.getNodeParameter('posts', itemIndex) as string).split(',').map(item => item.trim());
+	const customers = (ef.getNodeParameter('customers', itemIndex) as string).split(',').map(item => item.trim());
+
+	await client.mail.updatePosts({
+		accountId,
+		bookkeeperTeamId,
+		posts,
+		customers,
+	});
+
+	return { success: true };
+}

@@ -48,6 +48,13 @@ export const taskCreateDescription: INodeProperties[] = [
 		},
 		options: [
 			{
+				displayName: 'Mail Post ID',
+				name: 'mailPostId',
+				type: 'string',
+				default: '',
+				description: 'Mail post ID',
+			},
+			{
 				displayName: 'Priority',
 				name: 'priority',
 				type: 'options',
@@ -79,6 +86,27 @@ export const taskCreateDescription: INodeProperties[] = [
 				type: 'string',
 				default: 'open',
 				description: 'Task status',
+			},
+			{
+				displayName: 'Bulk for Teams',
+				name: 'bulkForTeams',
+				type: 'boolean',
+				default: false,
+				description: 'Whether to create separate tasks for each specified team',
+			},
+			{
+				displayName: 'Teams',
+				name: 'teams',
+				type: 'string',
+				default: '',
+				description: 'Comma-separated list of team IDs to create tasks for (works with Bulk for Teams)',
+			},
+			{
+				displayName: 'Checklists (JSON)',
+				name: 'checklistsJson',
+				type: 'json',
+				default: '[]',
+				description: 'Checklists in JSON format',
 			},
 		],
 	},

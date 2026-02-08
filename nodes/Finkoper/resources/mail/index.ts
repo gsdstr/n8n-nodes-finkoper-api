@@ -6,6 +6,7 @@ import { mailMarkSeenDescription } from './markSeen';
 import { mailGetMailboxCountersDescription } from './getMailboxCounters';
 import { mailGetMailSeenByDescription } from './getMailSeenBy';
 import { mailGetMailDescription } from './getMail';
+import { mailUpdatePostsDescription } from './updatePosts';
 
 const showOnlyForMail = {
 	resource: ['mail'],
@@ -63,6 +64,12 @@ export const mailDescription: INodeProperties[] = [
 				action: 'Get users who saw a post',
 				description: 'Get a list of users who have viewed a specific email post',
 			},
+			{
+				name: 'Update Posts',
+				value: 'updatePosts',
+				action: 'Update posts',
+				description: 'Update one or more email posts (e.g. assign to customers)',
+			},
 		],
 		default: 'getMailboxes',
 	},
@@ -73,4 +80,5 @@ export const mailDescription: INodeProperties[] = [
 	...mailGetMailboxCountersDescription,
 	...mailGetMailSeenByDescription,
 	...mailGetMailDescription,
+	...mailUpdatePostsDescription,
 ];

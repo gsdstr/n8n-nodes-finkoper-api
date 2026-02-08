@@ -29,6 +29,6 @@ export const resourceOperationsFunctions: Record<string, Record<string, Finkoper
 	customer,
 	mail,
 	role,
-	task,
+	task: { ...task, delete: task.deleteTask } as any,
 	user,
 };

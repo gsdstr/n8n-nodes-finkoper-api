@@ -1,6 +1,7 @@
 import type { INodeProperties } from 'n8n-workflow';
 import { taskListDescription } from './list';
 import { taskCreateDescription } from './create';
+import { taskDeleteDescription } from './delete';
 
 const showOnlyForTask = {
 	resource: ['task'],
@@ -28,9 +29,16 @@ export const taskDescription: INodeProperties[] = [
 				action: 'Create a task',
 				description: 'Create a new task',
 			},
+			{
+				name: 'Delete',
+				value: 'delete',
+				action: 'Delete a task',
+				description: 'Delete a task permanently',
+			},
 		],
 		default: 'list',
 	},
 	...taskListDescription,
 	...taskCreateDescription,
+	...taskDeleteDescription,
 ];
